@@ -12,6 +12,7 @@ class RExecServer:
         self.zmq_context = zmq.Context()
         self.zmq_socket = self.zmq_context.socket(zmq.REP)
         self.zmq_socket.connect(self.zmq_addr)
+        logging.info(f"Connected to {self.zmq_addr}")
         
         if(args.dspaces_api_addr):
             dspaces_client = dxspaces.DXSpacesClient(args.dspaces_api_addr)
@@ -36,6 +37,7 @@ class RExecServer:
 
     def run(self):
         try:
+            logging.info(f"Start to receive functions...")
             self.fn_recv_exec()
         except KeyboardInterrupt:
             print("W: interrupt received, stopping rexec server...")
